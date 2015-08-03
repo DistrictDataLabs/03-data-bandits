@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <title>MVP</title>
+        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    </head>
+    <body>
+        <h1>My CPI</h1>
+            <br/>
+        <div id="container">
+            <div id="content">
+            <p>Please enter your budget shares for the following categories:</p>
+            <br/>
+                <form id="BudgetShareForm" method="POST" action="" role="form">
+                    {{ form.hidden_tag() }}
+                    <div class="form-group">
+                    <table id="categoriestable">
+                    <tr>
+                        <td>{{form.food_share.label}}</td>
+                        <td>{{form.food_share(size=10, placeholder="Food/Beverage", class_="form-field")}}</td>
+                    
+                        <td>{{form.housing_share.label}}</td>
+                        <td>{{form.housing_share(size=10, placeholder="Housing", class_="form-field")}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{form.apparel_share.label}}</td>
+                        <td>{{form.apparel_share(size=10, placeholder="Apparel", class_="form-field")}}</td>
+                        
+                        <td>{{form.transportation_share.label}}</td>
+                        <td>{{form.transportation_share(size=10, placeholder="Transportation", class_="form-control")}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{form.medical_share.label}}</td>
+                        <td>{{form.medical_share(size=10, placeholder="Medical Care", class_="form-control")}}</td>
+                        
+                        <td>{{form.recreation_share.label}}</td>
+                        <td>{{form.recreation_share(size=10, placeholder="Recreation", class_="form-control")}}</td>
+                    </tr>
+                    <tr>
+                        <td>{{form.edu_share.label}}</td>
+                        <td>{{form.edu_share(size=10, placeholder="Education", class_="form-control")}}</td>
+                        
+                        <td>{{form.other_share.label}}</td>
+                        <td>{{form.other_share(size=10, placeholder="Other Services", class_="form-control""form")}}</td>
+                    </tr>
+                    </table>
+                    </div>
+                    {% if sum_error != None %}
+                        <p>{{sum_error}}</p>
+                    {% endif %}
+                    
+                    <p><input class="btn btn-default btn-submit" type="submit" value="Submit"></p>
+                </form>
+                <br/><br/><br/>
+                <form>
+                    <div class="form-group">
+                        {{form.my_cpi.label}}
+                        {% if my_cpi == None %}
+                            {{form.my_cpi(placeholder="My Inflation", class_="form-field", value=0.0)}}
+                        {% else %}
+                            {{form.my_cpi(value=my_cpi)}}
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
