@@ -11,7 +11,7 @@ from flask import flash
 blueprint = Blueprint('mycpi', __name__, static_folder="../static")
 
 
-@blueprint.route("/", methods=["GET", "POST"])
+@blueprint.route("/mycpi", methods=["GET", "POST"])
 def enterBudgetShare():
     form = BudgetShareForm(request.form)
     sum_error = None
@@ -25,8 +25,7 @@ def enterBudgetShare():
             my_cpi = None
     elif request.method == "GET":
         my_cpi = None
-        sum_error = None
-        
+        sum_error = None  
     return render_template("public/mycpi_mvp.html", form=form, my_cpi=my_cpi, sum_error=sum_error)
     
 def compute_cpi(form):

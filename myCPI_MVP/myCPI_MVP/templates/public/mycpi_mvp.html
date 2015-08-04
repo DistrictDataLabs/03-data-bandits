@@ -1,11 +1,14 @@
-<html>
+{#<html>
     <head>
         <title>MVP</title>
         <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
     </head>
     <body>
+        {% include "nav_bar.html" %}
         <h1>My CPI</h1>
-            <br/>
+            <br/> #}
+{% extends "layout_mvp.html" %}
+{% block content %}            
         <div id="container">
             <div id="content">
             <p>Please enter your budget shares for the following categories:</p>
@@ -63,5 +66,6 @@
                 </form>
             </div>
         </div>
-    </body>
-</html>
+{#    </body>
+</html>#}
+{% endblock %}
