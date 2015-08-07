@@ -26,15 +26,15 @@ class BudgetShareForm(Form):
         if not initial_validation:
             return False
          
-        if sum([self.food_share.data, 
-        self.housing_share.data, 
-        self.apparel_share.data, 
-        self.transportation_share.data, 
-        self.medical_share.data, 
-        self.recreation_share.data, 
-        self.edu_share.data, 
-        self.other_share.data]) != 1.0:
-            self.sum_error = True
-            return False
+        #if sum([self.food_share.data, 
+        #self.housing_share.data, 
+        #self.apparel_share.data, 
+        #self.transportation_share.data, 
+        #self.medical_share.data, 
+        #self.recreation_share.data, 
+        #self.edu_share.data, 
+        #self.other_share.data]) != 1.0:
+        #    self.sum_error = True
+        #    return False
             
         return True

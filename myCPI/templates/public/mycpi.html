@@ -11,7 +11,7 @@
 {% block content %}            
         <div id="container">
             <div id="content">
-            <p>Please enter your budget shares for the following categories:</p>
+            <p>Please enter the amount you spend ($) in each of the following categories:</p>
             <br/>
                 <form id="BudgetShareForm" method="POST" action="" role="form">
                     {{ form.hidden_tag() }}
@@ -19,7 +19,7 @@
                     <table id="categoriestable">
                     <tr>
                         <td>{{form.food_share.label}}</td>
-                        <td>{{form.food_share(size=10, placeholder="Food/Beverage", class_="form-field")}}</td>
+                        <td><span class="currencyinput">${{form.food_share(size=10, placeholder="Food/Beverage", class_="form-field")}}</span></td>
                     
                         <td>{{form.housing_share.label}}</td>
                         <td>{{form.housing_share(size=10, placeholder="Housing", class_="form-field")}}</td>

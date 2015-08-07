@@ -30,22 +30,23 @@ def enterBudgetShare():
     
 def compute_cpi(form):
     component_indexes = {'food':246.245,\
-    'apparel': 124.954,\
-    'housing':238.568,\
-    'edu': 137.425,\
-    'transport': 208.012,\
-    'medical_care': 446.271,\
-    'recreation': 116.395,\
-    'other': 415.022
-    }
-    wgted_sum = (form.food_share.data * component_indexes['food']/100 + \
-        form.housing_share.data * component_indexes['housing']/100 + \
-        form.apparel_share.data * component_indexes['apparel']/100 + \
-        form.edu_share.data * component_indexes['edu']/100 + \
-        form.transportation_share.data * component_indexes['transport']/100 + \
-        form.medical_share.data * component_indexes['medical_care']/100 + \
-        form.recreation_share.data * component_indexes['recreation']/100 + \
-        form.other_share.data * component_indexes['other']/100)
+        'housing':238.568,\
+        'apparel': 124.954,\
+        'edu': 137.425,\
+        'transport': 208.012,\
+        'medical_care': 446.271,\
+        'recreation': 116.395,\
+        'other': 415.022}
+    budget_sum = (form.food_share.data+form.housing_share.data+form.apparel_share.data+form.edu_share.data+ \
+        form.transportation_share.data+form.medical_share.data+form.recreation_share.data+form.other_share.data)
+    wgted_sum = (form.food_share.data/budget_sum * component_indexes['food']/100 + \
+        form.housing_share.data/budget_sum * component_indexes['housing']/100 + \
+        form.apparel_share.data/budget_sum * component_indexes['apparel']/100 + \
+        form.edu_share.data/budget_sum * component_indexes['edu']/100 + \
+        form.transportation_share.data/budget_sum * component_indexes['transport']/100 + \
+        form.medical_share.data/budget_sum * component_indexes['medical_care']/100 + \
+        form.recreation_share.data/budget_sum * component_indexes['recreation']/100 + \
+        form.other_share.data/budget_sum * component_indexes['other']/100)
     inflation = wgted_sum - 1
     inflation *= 100
     return inflation
