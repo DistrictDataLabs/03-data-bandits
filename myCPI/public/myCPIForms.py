@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask_wtf import Form
-from wtforms import FloatField
+from wtforms import FloatField,TextField
 from wtforms.validators import DataRequired
 
 
@@ -15,7 +15,8 @@ class BudgetShareForm(Form):
     other_share = FloatField('Other Services', validators=[DataRequired()])
     
     my_cpi = FloatField("My Inflation (percent increase from 1982)")
-    
+    avg_cpi = TextField("Average Inflation")
+
     def __init__(self, *args, **kwargs):
         super(BudgetShareForm, self).__init__(*args, **kwargs)
         self.sum_error = False

@@ -49,7 +49,7 @@ def compute_cpi(form):
         form.other_share.data/budget_sum * component_indexes['other']/100)
     inflation = wgted_sum - 1
     inflation *= 100
-    return inflation
+    return round(inflation,3)
 
     
 @blueprint.route("/about/")
