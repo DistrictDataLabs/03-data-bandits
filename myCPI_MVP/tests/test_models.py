@@ -4,7 +4,7 @@ import datetime as dt
 
 import pytest
 
-from myCPI_MVP.user.models import User, Role
+from myCPI.user.models import User, Role
 from .factories import UserFactory
 
 

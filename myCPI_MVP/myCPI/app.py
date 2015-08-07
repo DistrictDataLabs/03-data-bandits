@@ -2,9 +2,9 @@
 """The app module, containing the app factory function."""
 from flask import Flask, render_template
 
-from myCPI_MVP.settings import ProdConfig
-from myCPI_MVP.assets import assets
-from myCPI_MVP.extensions import (
+from myCPI.settings import ProdConfig
+from myCPI.assets import assets
+from myCPI.extensions import (
     bcrypt,
     cache,
     db,
@@ -12,7 +12,7 @@ from myCPI_MVP.extensions import (
     migrate,
     debug_toolbar,
 )
-from myCPI_MVP import public, user
+from myCPI import public, user
 
 
 def create_app(config_object=ProdConfig):

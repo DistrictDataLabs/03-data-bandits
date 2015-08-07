@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import pytest
 
-from myCPI_MVP.public.forms import LoginForm
-from myCPI_MVP.user.forms import RegisterForm
+from myCPI.public.forms import LoginForm
+from myCPI.user.forms import RegisterForm
 from .factories import UserFactory
 
 

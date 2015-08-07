@@ -2,9 +2,9 @@
 """Public section, including homepage and signup."""
 from flask import (Blueprint, request, render_template, flash, url_for,
                     redirect, session)
-from myCPI_MVP.public.myCPIForms import BudgetShareForm
+from myCPI.public.myCPIForms import BudgetShareForm
 
-from myCPI_MVP.utils import flash_errors
+from myCPI.utils import flash_errors
 from flask import flash
 
 
@@ -26,7 +26,7 @@ def enterBudgetShare():
     elif request.method == "GET":
         my_cpi = None
         sum_error = None  
-    return render_template("public/mycpi_mvp.html", form=form, my_cpi=my_cpi, sum_error=sum_error)
+    return render_template("public/mycpi.html", form=form, my_cpi=my_cpi, sum_error=sum_error)
     
 def compute_cpi(form):
     component_indexes = {'food':246.245,\

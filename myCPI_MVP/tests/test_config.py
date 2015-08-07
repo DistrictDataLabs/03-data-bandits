@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from myCPI_MVP.app import create_app
-from myCPI_MVP.settings import ProdConfig, DevConfig
+from myCPI.app import create_app
+from myCPI.settings import ProdConfig, DevConfig
 
 
 def test_production_config():

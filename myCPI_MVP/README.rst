@@ -12,7 +12,7 @@ First, set your app's secret key as an environment variable. For example, exampl
 
 .. code-block:: bash
 
-    export MYCPI_MVP_SECRET='something-really-secret'
+    export MYCPI_SECRET='something-really-secret'
 
 
 Then run the following commands to bootstrap your environment.
@@ -21,7 +21,7 @@ Then run the following commands to bootstrap your environment.
 ::
 
     git clone https://github.com/emperorfrost/myCPI_MVP
-    cd myCPI_MVP
+    cd myCPI
     pip install -r requirements/dev.txt
     python manage.py server
 

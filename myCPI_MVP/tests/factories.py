@@ -2,8 +2,8 @@
 from factory import Sequence, PostGenerationMethodCall
 from factory.alchemy import SQLAlchemyModelFactory
 
-from myCPI_MVP.user.models import User
-from myCPI_MVP.database import db
+from myCPI.user.models import User
+from myCPI.database import db
 
 
 class BaseFactory(SQLAlchemyModelFactory):

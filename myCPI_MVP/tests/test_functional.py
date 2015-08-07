@@ -7,7 +7,7 @@ import pytest
 from flask import url_for
 
 
-from myCPI_MVP.user.models import User
+from myCPI.user.models import User
 from .factories import UserFactory
 
 

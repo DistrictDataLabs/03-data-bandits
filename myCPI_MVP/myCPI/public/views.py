@@ -4,12 +4,12 @@ from flask import (Blueprint, request, render_template, flash, url_for,
                     redirect, session)
 from flask.ext.login import login_user, login_required, logout_user
 
-from myCPI_MVP.extensions import login_manager
-from myCPI_MVP.user.models import User
-from myCPI_MVP.public.forms import LoginForm
-from myCPI_MVP.user.forms import RegisterForm
-from myCPI_MVP.utils import flash_errors
-from myCPI_MVP.database import db
+from myCPI.extensions import login_manager
+from myCPI.user.models import User
+from myCPI.public.forms import LoginForm
+from myCPI.user.forms import RegisterForm
+from myCPI.utils import flash_errors
+from myCPI.database import db
 
 blueprint = Blueprint('public', __name__, static_folder="../static")
 

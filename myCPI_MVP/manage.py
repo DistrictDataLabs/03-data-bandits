@@ -4,12 +4,12 @@ import os
 from flask_script import Manager, Shell, Server
 from flask_migrate import MigrateCommand
 
-from myCPI_MVP.app import create_app
-from myCPI_MVP.user.models import User
-from myCPI_MVP.settings import DevConfig, ProdConfig
-from myCPI_MVP.database import db
+from myCPI.app import create_app
+from myCPI.user.models import User
+from myCPI.settings import DevConfig, ProdConfig
+from myCPI.database import db
 
-if os.environ.get("MYCPI_MVP_ENV") == 'prod':
+if os.environ.get("myCPI_ENV") == 'prod':
     app = create_app(ProdConfig)
 else:
     app = create_app(DevConfig)

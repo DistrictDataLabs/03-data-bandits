@@ -5,9 +5,9 @@ import os
 import pytest
 from webtest import TestApp
 
-from myCPI_MVP.settings import TestConfig
-from myCPI_MVP.app import create_app
-from myCPI_MVP.database import db as _db
+from myCPI.settings import TestConfig
+from myCPI.app import create_app
+from myCPI.database import db as _db
 
 from .factories import UserFactory
 

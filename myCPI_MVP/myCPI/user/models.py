@@ -3,8 +3,8 @@ import datetime as dt
 
 from flask_login import UserMixin
 
-from myCPI_MVP.extensions import bcrypt
-from myCPI_MVP.database import (
+from myCPI.extensions import bcrypt
+from myCPI.database import (
     Column,
     db,
     Model,
