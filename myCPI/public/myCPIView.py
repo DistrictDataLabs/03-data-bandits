@@ -6,7 +6,7 @@ from myCPI.public.myCPIForms import BudgetShareForm
 
 from myCPI.utils import flash_errors
 from flask import flash
-
+import bokeh.plotting
 
 blueprint = Blueprint('mycpi', __name__, static_folder="../static")
 
@@ -39,6 +39,7 @@ def compute_cpi(form):
         'other': 415.022}
     budget_sum = (form.food_share.data+form.housing_share.data+form.apparel_share.data+form.edu_share.data+ \
         form.transportation_share.data+form.medical_share.data+form.recreation_share.data+form.other_share.data)
+
     wgted_sum = (form.food_share.data/budget_sum * component_indexes['food']/100 + \
         form.housing_share.data/budget_sum * component_indexes['housing']/100 + \
         form.apparel_share.data/budget_sum * component_indexes['apparel']/100 + \
@@ -47,8 +48,8 @@ def compute_cpi(form):
         form.medical_share.data/budget_sum * component_indexes['medical_care']/100 + \
         form.recreation_share.data/budget_sum * component_indexes['recreation']/100 + \
         form.other_share.data/budget_sum * component_indexes['other']/100)
-    inflation = wgted_sum - 1
-    inflation *= 100
+    
+    inflation = wgted_sum * 100
     return round(inflation,3)
 
     
