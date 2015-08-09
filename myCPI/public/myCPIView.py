@@ -6,7 +6,6 @@ from myCPI.public.myCPIForms import BudgetShareForm
 
 from myCPI.utils import flash_errors
 from flask import flash
-import bokeh.plotting
 
 blueprint = Blueprint('mycpi', __name__, static_folder="../static")
 
