@@ -34,7 +34,9 @@ h2{
     border: 2px solid #000000;
     padding: 20px;
 }
-
+.actions, .chart {
+    margin: 15px auto;
+    width: 34px;
 #form2{
     border-radius: 25px;
     border: 2px solid #000000;

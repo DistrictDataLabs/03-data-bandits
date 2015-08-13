@@ -1,59 +1,57 @@
-{#<html>
-    <head>
-        <title>MVP</title>
-        <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
-    </head>
-    <body>
-        {% include "nav_bar.html" %}
-        <h1>My CPI</h1>
-            <br/> #}
-{% extends "layout_mvp.html" %}
-{% block content %}            
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+{% extends "layout.html" %}
+{% block js %}
+    <script src="http://code.highcharts.com/highcharts.js"></script>
+{% endblock %}
+{% block content %}
         <div id="container">
             <div id="content">
-            <p>Please enter the amount you spend ($) in each of the following categories:</p>
+            <p>MyCPI calculates your personal price index based on your personal expenses over eight spending categories.<br/><br/>
+        Please enter the amount you spent ($) over the last year in each of the following categories:</p>
             </br>
                 <form id="BudgetShareForm" method="POST" action="" role="form">
                     {{ form.hidden_tag() }}
                     <div class="form-group">
-                    <table id="categoriestable">
-                    <tr>
-                        <td>{{form.food_share.label}}</td>
-                        <td><span class="currencyinput">${{form.food_share(placeholder="Food/Beverage", class_="form-field")}}</span></td>
-                    
-                        <td>{{form.housing_share.label}}</td>
-                        <td><span class="currencyinput">${{form.housing_share(placeholder="Housing", class_="form-field")}}</span></td>
-                    </tr>
-                    <tr>
-                        <td>{{form.apparel_share.label}}</td>
-                        <td><span class="currencyinput">${{form.apparel_share(placeholder="Apparel", class_="form-field")}}</span></td>
-                        
-                        <td>{{form.transportation_share.label}}</td>
-                        <td><span class="currencyinput">${{form.transportation_share(placeholder="Transportation", class_="form-field")}}</span></td>
-                    </tr>
-                    <tr>
-                        <td>{{form.medical_share.label}}</td>
-                        <td><span class="currencyinput">${{form.medical_share(placeholder="Medical Care", class_="form-field")}}</span></td>
-                        
-                        <td>{{form.recreation_share.label}}</td>
-                        <td><span class="currencyinput">${{form.recreation_share(placeholder="Recreation", class_="form-field")}}</span></td>
-                    </tr>
-                    <tr>
-                        <td>{{form.edu_share.label}}</td>
-                        <td><span class="currencyinput">${{form.edu_share(placeholder="Education", class_="form-field")}}</span></td>
-                        
-                        <td>{{form.other_share.label}}</td>
-                        <td><span class="currencyinput">${{form.other_share(placeholder="Other Services", class_="form-field""form")}}</span></td>
-                    </tr>
-                    <tr>
-                        <td></td>
-                        <td></td> 
-                        <td></td>
-                        <td align="right"><input class="btn btn-default btn-submit" type="submit" value="Submit"></td>
-                    </tr>
-                    </table>
+                        <table id="categoriestable">
+                            <tr>
+                                <td>{{form.food_share.label}}</td>
+                                <td><span class="currencyinput">${{form.food_share(placeholder="Food/Beverage", class_="form-field")}}</span></td>
+
+                                <td>{{form.housing_share.label}}</td>
+                                <td><span class="currencyinput">${{form.housing_share(placeholder="Housing", class_="form-field")}}</span></td>
+                            </tr>
+                            <tr>
+                                <td>{{form.apparel_share.label}}</td>
+                                <td><span class="currencyinput">${{form.apparel_share(placeholder="Apparel", class_="form-field")}}</span></td>
+
+                                <td>{{form.transportation_share.label}}</td>
+                                <td><span class="currencyinput">${{form.transportation_share(placeholder="Transportation", class_="form-field")}}</span></td>
+                            </tr>
+                            <tr>
+                                <td>{{form.medical_share.label}}</td>
+                                <td><span class="currencyinput">${{form.medical_share(placeholder="Medical Care", class_="form-field")}}</span></td>
+
+                                <td>{{form.recreation_share.label}}</td>
+                                <td><span class="currencyinput">${{form.recreation_share(placeholder="Recreation", class_="form-field")}}</span></td>
+                            </tr>
+                            <tr>
+                                <td>{{form.edu_share.label}}</td>
+                                <td><span class="currencyinput">${{form.edu_share(placeholder="Education", class_="form-field")}}</span></td>
+
+                                <td>{{form.other_share.label}}</td>
+                                <td><span class="currencyinput">${{form.other_share(placeholder="Other Services", class_="form-field""form")}}</span></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td align="right"><input class="btn btn-default btn-submit" type="submit" value="Submit"></td>
+                            </tr>
+                        </table>
                     </div>
                 </form>
+
                 <br/><br/><br/>
                 <form>
                     <div class="form-group">
@@ -61,20 +59,37 @@
                         <tr>
                           <td>{{form.my_cpi.label}}</td>
                           <td>
-                        	{% if my_cpi == None %}
-                            	    {{form.my_cpi(placeholder="My Inflation", class_="form-field", value=0.0, readonly=true)}}
-                        	{% else %}
+                            {% if my_cpi == None %}
+                                    {{form.my_cpi(placeholder="My Inflation", class_="form-field", value=0.0, readonly=true)}}
+                            {% else %}
                                     {{form.my_cpi(value=my_cpi)}}
-                        	{% endif %}
-			  </td>
+                            {% endif %}
+              </td>
                           <td>{{form.avg_cpi.label}}</td>
-			  <td>{{form.avg_cpi(value=236.625, readonly=true)}}</td>
+              <td>{{form.avg_cpi(value=236.625, readonly=true)}}</td>
                         </tr>
-		      </table>
+              </table>
                     </div>
                 </form>
             </div>
         </div>
-{#    </body>
-</html>#}
+        <br/><br/><br/>
+        {% if share_data.page_type == 'graph' %}
+            <div id="{{ share_data.chart.renderTo }}" class="{{ share_data.page_type }}" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+            <script type="text/javascript" src="{{ url_for('static', filename='js/graph_highcharts.js') }}"></script>
+            <script type="text/javascript">
+                <!-- variable for div id -->
+                var chart_id = '{{ share_data.chart.renderTo|safe }}';
+                <!-- variable for title -->
+                var title = {{ share_data.title|safe }};
+                <!-- variable for chart variables. Adding further params that cannot be added through python -->
+                var chart = {{ share_data.chart|safe }};
+                chart.plotBackgroundColor = null;
+                chart.plotBorderWidth = null;
+                chart.plotShadow = false;
+                <!-- variable for the data -->
+                var series = {{ share_data.series|safe }};
+            </script>
+        {% endif %}        
+
 {% endblock %}
