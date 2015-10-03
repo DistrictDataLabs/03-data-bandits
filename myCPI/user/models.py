@@ -13,6 +13,63 @@ from myCPI.database import (
     SurrogatePK,
 )
 
+#need to store indexes.  Still have not figured out where to get that data and how to store! Take step back with cpi vs index values
+
+class UserEntry(Model):
+    __tablename__ = 'userEntry'
+    #Primary Key - needs to be autoincrementing
+    entryID = Column(db.Integer, primary_key=True)
+    date = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
+    cpi_u = Column(db.Integer, nullable=True)
+
+    #def __init__(self,entryID,date,cpi_u, **kwargs):
+    #    db.Model.__init__(self, date=date, cpi_u=cpi_u)
+
+    def __repr__(self):
+        return '{entryID}'.format(entryID=self.entryID)
+
+class UserComponent(Model):
+    __tablename__ = 'userComponent'
+    #Primary Key
+    component = Column(db.String(50), primary_key=True)
+    #Primary Key, Foreign Key
+    entryID = Column(db.Integer, db.ForeignKey('userEntry.entryID'),primary_key=True)
+    index = Column(db.Integer, nullable=False)
+    weight = Column(db.Integer, nullable=False)
+    
+    def __repr__(self):
+        return '<UserComponent({component})>'.format(component=self.component)
+
+class ComponentCPI(Model):
+    __tablename__ = 'componentCPI'
+    #Primary Key
+    component = Column(db.String(80), primary_key = True)
+    #Primary key
+    year = Column(db.Integer, primary_key = True)
+    cpi_jan = Column(db.Integer, nullable=True)
+    cpi_feb = Column(db.Integer, nullable=True)
+    cpi_march = Column(db.Integer, nullable=True)
+    cpi_april = Column(db.Integer, nullable=True)
+    cpi_may = Column(db.Integer, nullable=True)
+    cpi_june = Column(db.Integer, nullable=True)
+    cpi_aug = Column(db.Integer, nullable=True)
+    cpi_sept = Column(db.Integer, nullable=True)
+    cpi_oct = Column(db.Integer, nullable=True)
+    cpi_nov = Column(db.Integer, nullable=True)
+    cpi_dec = Column(db.Integer, nullable=True)
+    cpi_u_half1 = Column(db.Integer, nullable=True)
+    cpi_u_half2 = Column(db.Integer, nullable=True)
+    cpi_u_annual = Column(db.Integer, nullable=True)
+    weight = Column(db.Integer, nullable=True)
+
+    def __init__(self,component,year,cpi_jan,cpi_feb,cpi_march,cpi_april,cpi_may,cpi_june,cpi_aug,cpi_sept,cpi_oct,
+        cpi_nov,cpi_dec,cpi_u_half1,cpi_u_half2,cpi_u_annual,weight, **kwargs):
+		db.Model__init__(self,component=component,year=year,cpi_jan=cpi_jan,cpi_feb=cpi_feb,cpi_march=cpi_march,
+		cpi_april=cpi_april,cpi_may=cpi_may,cpi_june=cpi_june,cpi_aug=cpi_aug,cpi_sept=cpi_sept,cpi_oct=cpi_oct,
+                cpi_nov=cpi_nov,cpi_dec=cpi_dec,cpi_u_half1=cpi_u_half1,cpi_u_half2=cpi_u_annual,weight=weight, **kwargs) 
+
+    def __repr__(self):
+        return '<ComponentCPI({component})>'.format(component=self.component)
 
 class Role(SurrogatePK, Model):
     __tablename__ = 'roles'
@@ -25,7 +82,6 @@ class Role(SurrogatePK, Model):
 
     def __repr__(self):
         return '<Role({name})>'.format(name=self.name)
-
 
 class User(UserMixin, SurrogatePK, Model):
 
