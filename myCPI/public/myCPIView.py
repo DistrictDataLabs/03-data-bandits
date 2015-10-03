@@ -13,15 +13,17 @@ blueprint = Blueprint('mycpi', __name__, static_folder="../static")
 def enterBudgetShare():
     form = BudgetShareForm(request.form)
     share_data = {'None': None}
+    avg_share_data = {'None': None}
     if request.method == "POST":
         if form.validate_on_submit():
             my_cpi = compute_cpi(form)
             share_data = plot_shares(form)
+            avg_share_data = plot_avg_shares()
         else:
             my_cpi = None
     elif request.method == "GET":
         my_cpi = None
-    return render_template("public/mycpi.html", form=form, my_cpi=my_cpi, share_data=share_data)
+    return render_template("public/mycpi.html", form=form, my_cpi=my_cpi, share_data=share_data, avg_share_data=avg_share_data)
 
 def get_budget_sum(form):
     budget_sum = (form.food_share.data+form.housing_share.data+form.apparel_share.data+form.edu_share.data+ \
@@ -61,7 +63,7 @@ def compute_cpi(form):
     inflation = wgted_sum * 100
     return round(inflation,3)
 
-def plot_shares(form, chartID='chartID', chart_type='pie', chart_height=500):
+def plot_shares(form, chartID='chartID', chart_type='pie', chart_height=300):
     budget_shares = {}
     budget_shares['title'] = {"text": "Visualization of budget shares"}
     budget_sum = float(get_budget_sum(form))
@@ -81,7 +83,24 @@ def plot_shares(form, chartID='chartID', chart_type='pie', chart_height=500):
 
     return budget_shares
     
-    
+def plot_avg_shares(chartID='chartID1', chart_type='pie', chart_height=500):
+    avg_budget_shares = {}
+    avg_budget_shares['title'] = {"text": "Visualization of average budget shares"}
+    avg_budget_shares['series'] = json.dumps([{'name': "Average Budget Share",\
+            'colorByPoint': True,\
+            'data':[\
+                {"name":"Food/Beverage", "y":10},\
+                {"name":"Housing", "y": 15},\
+                {"name":"Apparel", "y": 20},\
+                {"name":"Transportation", "y": 20},\
+                {"name":"Medical Care", "y": 10},\
+                {"name":"Recreation", "y": 10},\
+                {"name":"Education", "y": 10},\
+                {"name":"Other Services", "y": 5}]}])
+    avg_budget_shares['page_type'] = "graph"
+    avg_budget_shares['chart'] = {"renderTo": chartID, "type": chart_type, "height": chart_height}
+
+    return avg_budget_shares      
     
 @blueprint.route("/about/")
 def about():
