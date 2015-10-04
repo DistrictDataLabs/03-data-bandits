@@ -64,8 +64,8 @@ class ComponentCPI(Model):
 
     def __init__(self,component,year,cpi_jan,cpi_feb,cpi_march,cpi_april,cpi_may,cpi_june,cpi_aug,cpi_sept,cpi_oct,
         cpi_nov,cpi_dec,cpi_u_half1,cpi_u_half2,cpi_u_annual,weight, **kwargs):
-		db.Model__init__(self,component=component,year=year,cpi_jan=cpi_jan,cpi_feb=cpi_feb,cpi_march=cpi_march,
-		cpi_april=cpi_april,cpi_may=cpi_may,cpi_june=cpi_june,cpi_aug=cpi_aug,cpi_sept=cpi_sept,cpi_oct=cpi_oct,
+        db.Model__init__(self,component=component,year=year,cpi_jan=cpi_jan,cpi_feb=cpi_feb,cpi_march=cpi_march,
+        cpi_april=cpi_april,cpi_may=cpi_may,cpi_june=cpi_june,cpi_aug=cpi_aug,cpi_sept=cpi_sept,cpi_oct=cpi_oct,
                 cpi_nov=cpi_nov,cpi_dec=cpi_dec,cpi_u_half1=cpi_u_half1,cpi_u_half2=cpi_u_annual,weight=weight, **kwargs) 
 
     def __repr__(self):
