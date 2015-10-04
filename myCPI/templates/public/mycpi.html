@@ -85,26 +85,12 @@
                     chart.plotShadow = false;
                     <!-- variable for the data -->
                     var series = {{ share_data.series|safe }};
+                    <!-- variable for xAxis -->
+                    var x_axis = {{ share_data.xAxis|safe }};
+                    <!-- variable for yAxis -->
+                    var y_axis = {{ share_data.yAxis|safe }};
                 </script>
             </div>
         {% endif %}
         <br/><br/><br/>
-        {% if avg_share_data.page_type == 'graph' %}
-            <div id="{{ avg_share_data.chart.renderTo }}" class="graph" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto">
-                <script type="text/javascript" src="{{ url_for('static', filename='js/graph_highcharts.js') }}"></script>
-                <script type="text/javascript">
-                    <!-- variable for div id -->
-                    var chart_id = '{{ avg_share_data.chart.renderTo|safe }}';
-                    <!-- variable for title -->
-                    var title = {{ avg_share_data.title|safe }};
-                    <!-- variable for chart variables. Adding further params that cannot be added through python -->
-                    var chart = {{ avg_share_data.chart|safe }};
-                    chart.plotBackgroundColor = null;
-                    chart.plotBorderWidth = null;
-                    chart.plotShadow = false;
-                    <!-- variable for the data -->
-                    var series = {{ avg_share_data.series|safe }};
-                </script>
-            </div>
-        {% endif %}
 {% endblock %}
