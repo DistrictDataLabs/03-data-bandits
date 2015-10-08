@@ -4,7 +4,7 @@ from flask import (Blueprint, request, render_template, flash, url_for,
                     redirect, session)
 from myCPI.public.myCPIForms import BudgetShareForm
 from myCPI.database import db
-from myCPI.user.models import ComponentCPI,UserEntry,UserComponent
+from myCPI.user.models import ComponentCPI,UserEntry,UserComponent,ComponentAge,ComponentIncome,ComponentRegions,ComponentEdu
 import json,datetime
 from sqlalchemy import and_
 
@@ -15,7 +15,7 @@ blueprint = Blueprint('mycpi', __name__, static_folder="../static")
 def enterBudgetShare():
     form = BudgetShareForm(request.form)
     share_data = {'None': None}
-
+     
     if request.method == "POST":
         if form.validate_on_submit():
             #create new entry in userEntry table for new values
@@ -53,6 +53,13 @@ def create_new_entry():
     entryid = getattr(user_entry,"entryID")
     
     return entryid
+
+def getNationalCPI():
+    #get national cpi value to display on the form
+    national_cpi = ComponentCPI.query.with_entities(ComponentCPI.cpi_u_annual)\
+    .filter(and_(ComponentCPI.year == 2014,ComponentCPI.component == 'All items')).all()
+     
+    return national_cpi
     
 def compute_cpi(form,entryid,usercomp_indexes,index_weights):
     component_indexes = {}
@@ -60,12 +67,10 @@ def compute_cpi(form,entryid,usercomp_indexes,index_weights):
     #get indexes from componentCPI table - cpi_u_annual for year 2014 for now
     compo_indexes = ComponentCPI.query.with_entities(ComponentCPI.component,ComponentCPI.cpi_u_annual)\
     .filter(and_(ComponentCPI.year == 2014,ComponentCPI.component != 'All items')).all()
-    print compo_indexes
+    
     for row in compo_indexes:
         component_indexes.update({row.component.lower().replace(" ","_"):row.cpi_u_annual})
     
-    print component_indexes
-
     ref_indexes = {'food':100,\
         'housing':100,\
         'apparel': 100,\
@@ -101,8 +106,28 @@ def insert_user_values(usercomp_indexes,entryid,index_weights,my_cpi):
 def plot_shares(form, component_names, index_weights, chartID='chart-stacked-bar', chart_type='column', chart_height=500):
     data = {}
     components = sorted(component_names.keys())
-    national_component_weights = {'apparel': 0.03338629778, 'education': 0.02310496308, 'food': 0.1350032713, 'housing': 0.332703991, 'medical_care': 0.1872324516, 'other': 0.0679876624,\
-        'recreation': 0.05099542013, 'transportation': 0.1696046359}
+    #national_component_weights = {'apparel': 0.03338629778, 'education': 0.02310496308, 'food': 0.1350032713, 'housing': 0.332703991, 'medical_care': 0.1872324516, 'other': 0.0679876624,\
+    #    'recreation': 0.05099542013, 'transportation': 0.1696046359}
+    
+    national_component_weights = {}
+    
+    national_compo = ComponentCPI.query.with_entities(ComponentCPI.component,ComponentCPI.weight)\
+    .filter(and_(ComponentCPI.year == 2014,ComponentCPI.component != 'All items')).all()
+    
+    for row in national_compo:
+        national_component_weights.update({row.component.lower().replace(" ","_"):row.weight})
+    
+    national_budget_sum = float(sum(national_component_weights.values()))
+    # calculate budget shares of each component
+    national_index_weights = {'food':national_component_weights['food']/national_budget_sum,\
+        'housing':national_component_weights['housing']/national_budget_sum,\
+        'apparel':national_component_weights['apparel']/national_budget_sum,\
+        'education':national_component_weights['education']/national_budget_sum,\
+        'transportation':national_component_weights['transportation']/national_budget_sum,\
+        'medical_care':national_component_weights['medical_care']/national_budget_sum,\
+        'recreation':national_component_weights['recreation']/national_budget_sum,\
+        'other':national_component_weights['other']/national_budget_sum}
+
     data['title'] = {"text": "Comparison of User shares by component with the national average"}
     
     data['xAxis'] = {"categories": [ component_names[name] for name in components]}
@@ -111,7 +136,7 @@ def plot_shares(form, component_names, index_weights, chartID='chart-stacked-bar
     data["plotOptions"] = {"series": {"stacking": "normal"}}
     
     data["series"] = json.dumps([{"name": 'Your budget share', "data": [round(index_weights[name],3) for name in components]}, \
-        {"name": "Average national budget share", "data": [ round(national_component_weights[name], 3) for name in components]}])
+        {"name": "Average national budget share", "data": [ round(national_index_weights[name], 3) for name in components]}])
     data['page_type'] = "graph"
     data['chart'] = {"renderTo": chartID, "type": chart_type, "height": chart_height, "xAxis": {"categories": [ component_names[name] for name in components]}, "yAxis": {"min": 0, "title": {"text": "Component shares"}}}
     
