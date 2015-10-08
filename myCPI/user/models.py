@@ -13,17 +13,12 @@ from myCPI.database import (
     SurrogatePK,
 )
 
-#need to store indexes.  Still have not figured out where to get that data and how to store! Take step back with cpi vs index values
-
 class UserEntry(Model):
     __tablename__ = 'userEntry'
     #Primary Key - needs to be autoincrementing
     entryID = Column(db.Integer, primary_key=True)
     date = Column(db.DateTime, nullable=False, default=dt.datetime.utcnow)
     cpi_u = Column(db.Integer, nullable=True)
-
-    #def __init__(self,entryID,date,cpi_u, **kwargs):
-    #    db.Model.__init__(self, date=date, cpi_u=cpi_u)
 
     def __repr__(self):
         return '{entryID}'.format(entryID=self.entryID)
@@ -70,6 +65,70 @@ class ComponentCPI(Model):
 
     def __repr__(self):
         return '<ComponentCPI({component})>'.format(component=self.component)
+
+class ComponentAge(Model):
+   __tablename__ = 'componentAge'
+   component = Column(db.String(80), primary_key = True)
+   year = Column(db.Integer, primary_key = True)
+   all_units = Column(db.Integer, nullable=True)
+   under_25 = Column(db.Integer, nullable=True)
+   age_25_to_34 = Column(db.Integer, nullable=True)
+   age_35_to_44 = Column(db.Integer, nullable=True)
+   age_45_to_54 = Column(db.Integer, nullable=True)
+   age_55_to_64 = Column(db.Integer, nullable=True)
+   age_65_to_older = Column(db.Integer, nullable=True)
+   age_65_to_74 = Column(db.Integer, nullable=True)
+   age_75_to_older = Column(db.Integer, nullable=True)
+
+   def __repr__(self):
+        return '<ComponentAge({component})>'.format(component=self.component)
+
+class ComponentIncome(Model):
+   __tablename__ = 'componentIncome'
+   component = Column(db.String(80), primary_key = True)
+   year = Column(db.Integer, primary_key = True)
+   all_units = Column(db.Integer, nullable=True)
+   lowest = Column(db.Integer, nullable=True)
+   second = Column(db.Integer, nullable=True)
+   third = Column(db.Integer, nullable=True)
+   fourth = Column(db.Integer, nullable=True)
+   fifth = Column(db.Integer, nullable=True)
+   sixth = Column(db.Integer, nullable=True)
+   seventh = Column(db.Integer, nullable=True)
+   eighth = Column(db.Integer, nullable=True)
+   ninth = Column(db.Integer, nullable=True)
+   highest = Column(db.Integer, nullable=True)
+
+   def __repr__(self):
+        return '<ComponentIncome({component})>'.format(component=self.component)
+
+class ComponentRegions(Model):
+   __tablename__ = 'componentRegions'
+   component = Column(db.String(80), primary_key = True)
+   year = Column(db.Integer, primary_key = True)
+   all_units = Column(db.Integer, nullable=True)
+   northeast = Column(db.Integer, nullable=True)
+   midwest = Column(db.Integer, nullable=True)
+   south = Column(db.Integer, nullable=True)
+   west = Column(db.Integer, nullable=True)
+
+   def __repr__(self):
+        return '<ComponentRegions({component})>'.format(component=self.component)
+
+class ComponentEdu(Model):
+   __tablename__ = 'componentEdu'
+   component = Column(db.String(80), primary_key = True)
+   year = Column(db.Integer, primary_key = True)
+   total_less_than_graduate = Column(db.Integer, nullable=True)
+   less_than_high_school = Column(db.Integer, nullable=True)
+   high_school_grad = Column(db.Integer, nullable=True)
+   assoc_degree = Column(db.Integer, nullable=True)
+   total_college_grad = Column(db.Integer, nullable=True)
+   bachelor_degree = Column(db.Integer, nullable=True)
+   masters_degree = Column(db.Integer, nullable=True)
+
+   def __repr__(self):
+        return '<ComponentEdu({component})>'.format(component=self.component)
 
 class Role(SurrogatePK, Model):
     __tablename__ = 'roles'
