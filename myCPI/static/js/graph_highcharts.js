@@ -4,7 +4,7 @@ $(document).ready(function () {
         title: title,
         tooltip: {
             formatter: function () {
-                return '<b>' + this.x + '</b><br/>' + this.series.name + ': ' + this.y + '<br/>'
+                return '<b>' + this.x + '</b><br/>' + this.series.name + ': ' + Math.round(this.y * 100) + '%' + '<br/>'
             },            
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },

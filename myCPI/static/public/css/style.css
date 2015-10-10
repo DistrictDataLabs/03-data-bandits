@@ -132,3 +132,8 @@ form input[type=submit]{
     cursor: pointer;
     text-align: center;
 } 
+
+form control{
+    margin-bottom:0px;
+    padding-bottom:0px;
+}
