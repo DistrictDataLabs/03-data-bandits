@@ -44,3 +44,9 @@ docs/_build
 
 # Virtualenvs
 env/
+
+# backup/orig files
+*.bak
+*.orig
+
+*.DS_Store
