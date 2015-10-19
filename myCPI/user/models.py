@@ -83,6 +83,9 @@ class ComponentAge(Model):
    def __repr__(self):
         return '<ComponentAge({component})>'.format(component=self.component)
 
+   def __getitem__(self, key):
+        return self.__dict__.__getitem__(key)        
+
 class ComponentIncome(Model):
    __tablename__ = 'componentIncome'
    component = Column(db.String(80), primary_key = True)
@@ -102,6 +105,10 @@ class ComponentIncome(Model):
    def __repr__(self):
         return '<ComponentIncome({component})>'.format(component=self.component)
 
+   def __getitem__(self, key):
+        return self.__dict__.__getitem__(key)
+
+
 class ComponentRegions(Model):
    __tablename__ = 'componentRegions'
    component = Column(db.String(80), primary_key = True)
@@ -114,6 +121,10 @@ class ComponentRegions(Model):
 
    def __repr__(self):
         return '<ComponentRegions({component})>'.format(component=self.component)
+    
+   def __getitem__(self, key):
+        return self.__dict__.__getitem__(key)
+
 
 class ComponentEdu(Model):
    __tablename__ = 'componentEdu'
@@ -129,6 +140,10 @@ class ComponentEdu(Model):
 
    def __repr__(self):
         return '<ComponentEdu({component})>'.format(component=self.component)
+
+   def __getitem__(self, key):
+        return self.__dict__.__getitem__(key)
+
 
 class Role(SurrogatePK, Model):
     __tablename__ = 'roles'
