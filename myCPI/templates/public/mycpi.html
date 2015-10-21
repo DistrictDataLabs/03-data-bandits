@@ -18,8 +18,6 @@
 
         <div id="fluid-container">
             <!-- <div id="content"> -->
-                <p>MyCPI calculates your personal price index based on your personal expenses over eight spending categories.<br/><br/>
-        Please enter the amount you spent ($) over the last year in each of the following categories:</p>
                 </br>
                 <form id="BudgetShareForm" method="POST" action="" role="form" class="form-inline">
                     {{ form.hidden_tag() }}
@@ -38,10 +36,10 @@
                         <div class="row" id="row1">
                             <div class="panel panel-primary col-xs-5">
                                 <div class="panel-heading clearfix">
-                                    <h3 class="panel-title">Budgetary Expenses</h3>
+                                    <h3 class="panel-title">Please enter the total amount spent ($ USD) in each of the following spending categories over a one month period:</h3>
                                 </div>
                                 <div class="panel-body">
-                                        <div class="row">
+					<div class="row">
                                             <label class="form-control col-xs-1 col-xs-offset-1" for="food">{{form.food_share.label(title="breakfast cereal, milk, coffee, chicken, wine, full service meals and snacks")}}</label>
                                             <!-- <div class="col-xs-1"></div> -->
                                             <div class="input-group pull-right">
@@ -136,8 +134,7 @@
                             </div > -->
                             <div class="panel panel-primary col-xs-3 col-xs-offset-1">
                                 <div class="panel-heading clearfix">
-                                    <!-- <h3 class="panel-title">Region Of Residence</h3> -->
-                                    <h3 class="panel-title">{{ form.rgn_residence.label(title="Where do you live?") }}</h3>
+                                    <h3 class="panel-title">What is your region of residence?</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row" style="margin: 0 auto; width: 75% ">
@@ -150,8 +147,7 @@
                             <div class="col-xs-2"></div>
                             <div class="panel panel-primary col-xs-3 col-xs-offset-1">
                                 <div class="panel-heading clearfix">
-                                    <!-- <h3 class="panel-title">Region Of Residence</h3> -->
-                                    <h2 class="panel-title">{{ form.age_group.label(title="How old are you") }}</h2>
+                                    <h3 class="panel-title">What is your age?</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row" style="margin: 0 auto; width: 75% ">
@@ -164,8 +160,7 @@
                             <div class="col-xs-2"></div>
                             <div class="panel panel-primary col-xs-3 col-xs-offset-1">
                                 <div class="panel-heading clearfix">
-                                    <!-- <h3 class="panel-title">Region Of Residence</h3> -->
-                                    <h2 class="panel-title">{{ form.edu_level.label(title="Highest Edudation") }}</h2>
+                                    <h3 class="panel-title">What is your highest level of education?</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row" style="margin: 0 auto; width: 75% ">
@@ -178,8 +173,7 @@
                             <div class="col-xs-2"></div>
                             <div class="panel panel-primary col-xs-3 col-xs-offset-1">
                                 <div class="panel-heading clearfix">
-                                    <!-- <h3 class="panel-title">Region Of Residence</h3> -->
-                                    <h2 class="panel-title">{{ form.income_group.label(title="Income Group") }}</h2>
+                                    <h3 class="panel-title">What is your income?</h3>
                                 </div>
                                 <div class="panel-body">
                                     <div class="row" style="margin: 0 auto; width: 75% ">
@@ -196,8 +190,8 @@
                 </form>
                 <br/><br/><br/>
                 <form id="mycpi_panel" role="form" class="form-inline">
-                    <div class="panel panel-default clearfix col-xs-5">
-                        <div class="panel-heading">
+                    <div class="panel panel-primary col-xs-5">
+                        <div class="panel-heading clearfix">
                             <h3 class="panel-title"><b>CPI Comparison</b></h3>
                         </div>
                         <div class="panel-body">
