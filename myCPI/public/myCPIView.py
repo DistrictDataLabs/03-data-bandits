@@ -15,14 +15,15 @@ table_lookup = {'ComponentRegions': ComponentRegions,\
     'ComponentEdu': ComponentEdu,\
     'ComponentIncome': ComponentIncome}
 
+    
 @blueprint.route("/mycpi", methods=["GET", "POST"])
 def enterBudgetShare():
     form = BudgetShareForm(request.form)
     share_data = {'None': None}
-    share_data_1 = {'None': None}
+    cpi_data = {'None': None}
     national_cpi = getNationalCPI()
     print national_cpi    
-
+    
     if request.method == "POST":
         if form.validate_on_submit():
             #create new entry in userEntry table for new values
@@ -52,17 +53,33 @@ def enterBudgetShare():
             # get shares by region of residence
             rgn_weights = get_weights('Regions', form.rgn_residence.data)
             
+            # get component indexes
+            component_indexes = get_component_indexes()
             # calculate user's customized cpi
-            my_cpi = compute_cpi(form,entryid,user_budget,user_weights)
+            my_cpi = compute_cpi(component_indexes,user_weights)
+            # calculate the national cpi
+            # national_cpi = compute_cpi(component_indexes, national_weights)
+            # calculate cpi for user's age group
+            age_cpi = compute_cpi(component_indexes, age_weights)
+            # calculate cpi for user's education level
+            edu_cpi = compute_cpi(component_indexes, edu_weights)
+            # calculate cpi for user's income group
+            income_cpi = compute_cpi(component_indexes, income_weights)
+            # calculate cpi for user's region of residence
+            rgn_cpi = compute_cpi(component_indexes, rgn_weights)
+
+            
             insert_user_values(user_budget,entryid,user_weights,my_cpi)
-            share_data_1 = plot_shares(form, component_names, national_weights, user_weights)
-            share_data = plot_vis(form, component_names, user_demo, national_weights, user_weights, age_weights, edu_weights, income_weights, rgn_weights)
+            # share_data = plot_shares(component_names, national_weights, user_weights)
+            share_data = plot_vis(component_names, national_weights, user_weights, age_weights, edu_weights, income_weights, rgn_weights)
+            cpi_data = plot_cpi(national_cpi, my_cpi, age_cpi, edu_cpi, income_cpi, rgn_cpi)
+            print cpi_data
         else:
             my_cpi = None
     elif request.method == "GET":
         my_cpi = None
         
-    return render_template("public/mycpi.html", form=form, my_cpi=my_cpi, national_cpi=national_cpi, share_data=share_data, share_data_1=share_data_1)
+    return render_template("public/mycpi.html", form=form, national_cpi=national_cpi, my_cpi=my_cpi, share_data=share_data, cpi_data=cpi_data )
 
 def get_user_weights(user_budget):
     # calculate budget sum
@@ -147,9 +164,10 @@ def getNationalCPI():
     .filter(and_(ComponentCPI.year == 2014,ComponentCPI.component == 'All items')).one()
     national_cpi = results[0];
 
-    return national_cpi
-    
-def compute_cpi(form,entryid,usercomp_indexes,index_weights):
+    return national_cpi[0][0]
+
+
+def get_component_indexes():
     component_indexes = {}
 
     #get indexes from componentCPI table - cpi_u_annual for year 2014 for now
@@ -157,7 +175,12 @@ def compute_cpi(form,entryid,usercomp_indexes,index_weights):
     .filter(and_(ComponentCPI.year == 2014,ComponentCPI.component != 'All items')).all()
     
     for row in compo_indexes:
-        component_indexes.update({row.component.lower().replace(" ","_"):row.cpi_u_annual})
+        component_indexes.update({row.component.strip().lower().replace(" ","_"):row.cpi_u_annual})
+    
+    return component_indexes
+
+
+def compute_cpi(component_indexes, weights):
     
     ref_indexes = {'food':100,\
         'housing':100,\
@@ -167,15 +190,16 @@ def compute_cpi(form,entryid,usercomp_indexes,index_weights):
         'medical_care': 100,\
         'recreation': 100,\
         'other': 100}
-    
-    wgted_sum = (index_weights['food'] * component_indexes['food']/ref_indexes['food'] +\
-        index_weights['housing'] * component_indexes['housing']/ref_indexes['housing'] +\
-        index_weights['apparel'] * component_indexes['apparel']/ref_indexes['apparel'] +\
-        index_weights['education'] * component_indexes['education']/ref_indexes['education'] +\
-        index_weights['transportation'] * component_indexes['transportation']/ref_indexes['transportation'] +\
-        index_weights['medical_care'] * component_indexes['medical_care']/ref_indexes['medical_care'] +\
-        index_weights['recreation'] * component_indexes['recreation']/ref_indexes['recreation'] +\
-        index_weights['other'] * component_indexes['other']/ref_indexes['other'])
+
+    wgted_sum = (\
+        weights['food'] * component_indexes['food']/ref_indexes['food'] +\
+        weights['housing'] * component_indexes['housing']/ref_indexes['housing'] +\
+        weights['apparel'] * component_indexes['apparel']/ref_indexes['apparel'] +\
+        weights['education'] * component_indexes['education']/ref_indexes['education'] +\
+        weights['transportation'] * component_indexes['transportation']/ref_indexes['transportation'] +\
+        weights['medical_care'] * component_indexes['medical_care']/ref_indexes['medical_care'] +\
+        weights['recreation'] * component_indexes['recreation']/ref_indexes['recreation'] +\
+        weights['other'] * component_indexes['other']/ref_indexes['other'])
     
     inflation = wgted_sum * 100
     mycpi = round(inflation,3)
@@ -192,16 +216,15 @@ def insert_user_values(usercomp_indexes,entryid,index_weights,my_cpi):
     stmt = user_entry.update(cpi_u = my_cpi)
 
 
-def plot_vis(form, component_names, user_demo, national_weights, user_weights, age_weights, edu_weights, income_weights, rgn_weights, chartID='chart-stacked-bar', chart_type='column', chart_height=500):
+def plot_vis(component_names, national_weights, user_weights, age_weights, edu_weights, income_weights, rgn_weights, chartID='chart-stacked-bar', chart_type='column', chart_height=500):
     data = {}
     components = sorted(component_names.keys())
 
     data['title'] = {"text": "Comparison of Budget shares"}
-    # data['xAxis'] = {"categories": ["National", "You", "Age Group", "Education Level", "Income Level", "Region Of Residence"  ]}
-    data['xAxis'] = {"categories": ["National", "You", user_demo['age'][1], user_demo['edu'][1], user_demo['income'][1], user_demo['rgn'][1] ]}
+    data['xAxis'] = {"categories": ["National", "You", "Age Group", "Education Level", "Income Level", "Region Of Residence"  ]}
     data['yAxis'] = {"min": 0, "title": {"text": "Component shares"}}
-    data["legend"] = {"reversed": True}
-    data["plotOptions"] = {"series": {"stacking": "normal"}}
+    data['legend'] = {"reversed": True}
+    data['plotOptions'] = {"series": {"stacking": "normal"}}
     data['page_type'] = "graph"
 
     d = []
@@ -211,8 +234,19 @@ def plot_vis(form, component_names, user_demo, national_weights, user_weights, a
     data['chart'] = {"renderTo": chartID, "type": chart_type, "height": chart_height, "xAxis": {"categories": [ component_names[name] for name in components]}, "yAxis": {"min": 0, "title": {"text": "Component shares"}}}
     
     return data    
+
+
+def plot_cpi(national_cpi, my_cpi, age_cpi, edu_cpi, income_cpi, rgn_cpi, chartID='chart-line', chart_type='line', chart_height=500):
+    data = {}
+    data['title'] = {"text": "Comparison of Price Indexes"}
+    data['xAxis'] = {"categories": ["National", "You", "Age Group", "Education Level", "Income Level", "Region Of Residence"  ]}
+    data['yAxis'] = {"min": 150, "title": {"text": "Component Price Index"}}
+    data['series'] = json.dumps([{"name": "Component Index", "data":[national_cpi, my_cpi, age_cpi, edu_cpi, income_cpi, rgn_cpi]}])
+    data['page_type'] = "graph"
+    data['chart'] = {"renderTo": chartID, "type": chart_type, "height": chart_height}
+    return data
     
-def plot_shares(form, component_names, national_weights, user_weights, chartID='chart-stacked-bar-1', chart_type='column', chart_height=500):
+def plot_shares(component_names, national_weights, user_weights, chartID='chart-stacked-bar-1', chart_type='column', chart_height=500):
     data = {}
     components = sorted(component_names.keys())
 
