@@ -164,7 +164,7 @@ def getNationalCPI():
     .filter(and_(ComponentCPI.year == 2014,ComponentCPI.component == 'All items')).one()
     national_cpi = results[0];
 
-    return national_cpi[0][0]
+    return national_cpi
 
 
 def get_component_indexes():
