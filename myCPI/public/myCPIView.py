@@ -238,7 +238,7 @@ def plot_cpi(national_cpi, my_cpi, age_cpi, edu_cpi, income_cpi, rgn_cpi, chartI
     data = {}
     data['title'] = {"text": "Comparison of Price Indexes"}
     data['xAxis'] = {"categories": ["National", "You", "Age Group", "Education Level", "Income Level", "Region Of Residence"  ]}
-    data['yAxis'] = {"min": 0, "title": {"text": "Component Price Index"}}
+    data['yAxis'] = {"min": 150, "title": {"text": "Component Price Index"}}
     data['series'] = json.dumps([{"name": "Component Index", "data":[national_cpi, my_cpi, age_cpi, edu_cpi, income_cpi, rgn_cpi]}])
     data['page_type'] = "graph"
     data['chart'] = {"renderTo": chartID, "type": chart_type, "height": chart_height}

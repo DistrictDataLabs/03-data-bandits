@@ -27,11 +27,11 @@
   }</style>
         
         <div id="fluid-container">
-                   Please enter the amount you spent ($) over the last year in each of the following categories:</p>
+                <p> </p>
                 </br>
                 <div class="panel panel-default ">
                     <div class="panel-heading clearfix text-center">
-                        <h1 class="panel-title"><b>Fill out the form to learn how your personal expenditure is affected by inflation</b></h1>
+                        <h1 class="panel-title"><b>MyCPI - How does inflation affect me?</b></h1>
                     </div>
                     <div class="panel-body">                
                 <form id="BudgetShareForm" method="POST" action="" role="form" class="form-inline">
@@ -51,12 +51,13 @@
                         <div class="row" id="row1">
                             <div class="panel panel-primary col-xs-5 col-xs-offset-1">
                                 <div class="panel-heading clearfix text-center">
-                                    <!-- <h3 class="panel-title">Budgetary Expenses</h3> -->
-                                    {{ form.budget_form_title.label(class="panel-title") }}
+                                    {{ form.budget_form_title.label(class="panel-title", title="Please enter the amount you spent ($) over the last year in each of the following categories") }}
                                 </div>
                                 <div class="panel-body">
                                         <br/>
-					<div class="row">
+                                        <p>Please enter the amount you spent ($) over the last year in each of the following categories:</p>
+                                        <br/>
+                                        <div class="row">
                                             <label class="form-control col-xs-1 col-xs-offset-1" for="food">{{form.food_share.label(title="breakfast cereal, milk, coffee, chicken, wine, full service meals and snacks")}}</label>
                                             <!-- <div class="col-xs-1"></div> -->
                                             <div class="input-group pull-right">
@@ -151,7 +152,7 @@
                             </div > -->
                             <div class="panel panel-primary col-xs-3 col-xs-offset-1">
                                 <div class="panel-heading clearfix  text-center">
-                                    {{ form.rgn_residence.label(title="Where do you live?", class="panel-title") }}
+                                    {{ form.rgn_residence.label(title="What is your region of residence?", class="panel-title") }}
                                 </div>
                                 <div class="panel-body">
                                     <div class="row" style="margin: 0 auto; width: 75% ">
@@ -164,7 +165,7 @@
                             <div class="col-xs-2"></div>
                             <div class="panel panel-primary col-xs-3 col-xs-offset-1">
                                 <div class="panel-heading clearfix text-center">
-                                    {{ form.age_group.label(title="How old are you?", class="panel-title") }}
+                                    {{ form.age_group.label(title="What is your age?", class="panel-title") }}
                                 </div>
                                 <div class="panel-body">
                                     <div class="row" style="margin: 0 auto; width: 75% ">
@@ -177,7 +178,7 @@
                             <div class="col-xs-2"></div>
                             <div class="panel panel-primary col-xs-3 col-xs-offset-1">
                                 <div class="panel-heading clearfix  text-center">
-                                    {{ form.edu_level.label(title="What have you studied?", class="panel-title") }}
+                                    {{ form.edu_level.label(title="What is your highest level of education?", class="panel-title") }}
                                 </div>
                                 <div class="panel-body">
                                     <div class="row" style="margin: 0 auto; width: 75% ">
@@ -190,7 +191,7 @@
                             <div class="col-xs-2"></div>
                             <div class="panel panel-primary col-xs-3 col-xs-offset-1">
                                 <div class="panel-heading clearfix  text-center">
-                                    {{ form.income_group.label(title="How much do you make?", class="panel-title") }}
+                                    {{ form.income_group.label(title="What is your income?", class="panel-title") }}
                                 </div>
                                 <div class="panel-body">
                                     <div class="row" style="margin: 0 auto; width: 75% ">

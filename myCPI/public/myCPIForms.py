@@ -32,15 +32,15 @@ choices = \
         },
         'Income':\
         {
-            '0': {'col': 'lowest', 'choice': ('0', 'Less than $5,000')},
-            '1': {'col': 'second', 'choice': ('1', '$5000 to $9,999')},
-            '2': {'col': 'third', 'choice': ('2', '$10,000 to $14,999')},
-            '3': {'col': 'fourth', 'choice': ('3', '$15,000 to $19,999')},
-            '4': {'col': 'fifth', 'choice': ('4', '$20,000 to $29,999')},
-            '5': {'col': 'sixth', 'choice': ('5', '$30,000 to $39,999')},
-            '6': {'col': 'seventh', 'choice': ('6', '$40,000 to $49,999')},
-            '7': {'col': 'eigth', 'choice': ('7', '$50,000 to $69,999')},
-            '8': {'col': 'ninth', 'choice': ('8', '$70,000 and more')},
+            '0': {'col': 'less_than_five', 'choice': ('0', 'Less than $5,000')},
+            '1': {'col': 'five_to_ten', 'choice': ('1', '$5000 to $9,999')},
+            '2': {'col': 'ten_to_fifteen', 'choice': ('2', '$10,000 to $14,999')},
+            '3': {'col': 'fifteen_to_twenty', 'choice': ('3', '$15,000 to $19,999')},
+            '4': {'col': 'twenty_to_thirty', 'choice': ('4', '$20,000 to $29,999')},
+            '5': {'col': 'thirty_to_fourty', 'choice': ('5', '$30,000 to $39,999')},
+            '6': {'col': 'fourty_to_fifty', 'choice': ('6', '$40,000 to $49,999')},
+            '7': {'col': 'fifty_to_seventy', 'choice': ('7', '$50,000 to $69,999')},
+            '8': {'col': 'seventy_or_more', 'choice': ('8', '$70,000 and more')},
         }
     }
 
