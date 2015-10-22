@@ -40,12 +40,13 @@ choices = \
             '5': {'col': 'thirty_to_fourty', 'choice': ('5', '$30,000 to $39,999')},
             '6': {'col': 'fourty_to_fifty', 'choice': ('6', '$40,000 to $49,999')},
             '7': {'col': 'fifty_to_seventy', 'choice': ('7', '$50,000 to $69,999')},
-            '8': {'col': 'more_than_70', 'choice': ('8', '$70,000 and more')},
+            '8': {'col': 'seventy_or_more', 'choice': ('8', '$70,000 and more')},
         }
     }
 
 
 class BudgetShareForm(Form):
+    budget_form_title = TextField("Budgetary Expenses")
     food_share = FloatField('Food/Beverage', validators=[DataRequired()])
     housing_share = FloatField('Housing', validators=[DataRequired()])
     apparel_share = FloatField('Apparel', validators=[DataRequired()])
