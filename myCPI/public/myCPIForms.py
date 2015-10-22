@@ -7,8 +7,8 @@ choices = \
     {
         'Regions':\
         {
-            '0': {'col': 'northeast', 'choice': ('0', 'North East')},\
-            '1': {'col': 'midwest', 'choice': ('1', 'Mid West')},\
+            '0': {'col': 'northeast', 'choice': ('0', 'Northeast')},\
+            '1': {'col': 'midwest', 'choice': ('1', 'Midwest')},\
             '2':{'col': 'south', 'choice': ('2', 'South')},\
             '3': {'col': 'west', 'choice': ('3', 'West')}
         },
@@ -47,6 +47,7 @@ choices = \
 
 
 class BudgetShareForm(Form):
+    budget_form_title = TextField("Budgetary Expenses")
     food_share = FloatField('Food/Beverage', validators=[DataRequired()])
     housing_share = FloatField('Housing', validators=[DataRequired()])
     apparel_share = FloatField('Apparel', validators=[DataRequired()])
