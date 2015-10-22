@@ -20,6 +20,8 @@ def enterBudgetShare():
     form = BudgetShareForm(request.form)
     share_data = {'None': None}
     share_data_1 = {'None': None}
+    national_cpi = getNationalCPI()
+    print national_cpi    
 
     if request.method == "POST":
         if form.validate_on_submit():
@@ -60,7 +62,7 @@ def enterBudgetShare():
     elif request.method == "GET":
         my_cpi = None
         
-    return render_template("public/mycpi.html", form=form, my_cpi=my_cpi, share_data=share_data, share_data_1=share_data_1)
+    return render_template("public/mycpi.html", form=form, my_cpi=my_cpi, national_cpi=national_cpi, share_data=share_data, share_data_1=share_data_1)
 
 def get_user_weights(user_budget):
     # calculate budget sum
@@ -141,9 +143,10 @@ def create_new_entry():
 
 def getNationalCPI():
     #get national cpi value to display on the form
-    national_cpi = ComponentCPI.query.with_entities(ComponentCPI.cpi_u_annual)\
-    .filter(and_(ComponentCPI.year == 2014,ComponentCPI.component == 'All items')).all()
-     
+    results = ComponentCPI.query.with_entities(ComponentCPI.cpi_u_annual)\
+    .filter(and_(ComponentCPI.year == 2014,ComponentCPI.component == 'All items')).one()
+    national_cpi = results[0];
+
     return national_cpi
     
 def compute_cpi(form,entryid,usercomp_indexes,index_weights):
