@@ -22,8 +22,7 @@ class ProdConfig(Config):
     DB_NAME = 'dev.db'
     # Put the db file in project root
     DB_PATH = os.path.join(Config.PROJECT_ROOT, DB_NAME)
-    # TODO: Change me
-    SQLALCHEMY_DATABASE_URI = os_env.get('DATABASE_URL', 'postgres://test:test@localhost')
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///{0}'.format(DB_PATH)
     DEBUG_TB_ENABLED = False  # Disable Debug toolbar
 
 class DevConfig(Config):
